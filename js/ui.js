@@ -10,6 +10,11 @@ const UI = (function () {
   const dialog    = document.getElementById("streakDialog");
   const form      = document.getElementById("streakForm");
   const nameInput = document.getElementById("nameInput");
+  const confirmDialog = document.getElementById("confirmDialog");
+  const confirmTitle = document.getElementById("confirmTitle");
+  const confirmMessage = document.getElementById("confirmMessage");
+  const confirmCancel = document.getElementById("confirmCancel");
+  const confirmAccept = document.getElementById("confirmAccept");
   const devPanel  = document.getElementById("devPanel");
   const devToggle = document.getElementById("devToggle");
   const devPasswordDialog = document.getElementById("devPasswordDialog");
@@ -32,6 +37,8 @@ const UI = (function () {
   let handlers = {};                 // functions that app.js gives us
   let editingId = null;              // null = we're making a NEW streak
   let celebrationTimer = null;
+  let confirmationResolve = null;
+  let confirmationAccepted = false;
 
   /* ---------- Small helpers ---------- */
 
@@ -56,6 +63,18 @@ const UI = (function () {
     const m = Math.floor((ms % 3600000) / 60000);
     const s = Math.floor((ms % 60000) / 1000);
     return (d ? d + "d " : "") + h + "h " + m + "m " + s + "s";
+  }
+
+  function confirm(options) {
+    setText(confirmTitle, options.title);
+    setText(confirmMessage, options.message);
+    setText(confirmAccept, options.confirmLabel);
+
+    return new Promise(function (resolve) {
+      confirmationResolve = resolve;
+      confirmDialog.showModal();
+      confirmCancel.focus();
+    });
   }
 
   /* ---------- Building a card (done once per streak) ---------- */
@@ -189,7 +208,7 @@ const UI = (function () {
 
   function prepareCelebrationConfetti() {
     const confetti = celebration.querySelector(".celebration-confetti");
-    const colors = ["#fff1a8", "#ff7c74", "#70e3d0", "#b49aff", "#ffffff", "#ffbf69"];
+    const colors = ["#a3fd1c", "#5cef00", "#00f5d4", "#168bff", "#ff3cac", "#ffb000"];
 
     for (let i = 0; i < 36; i++) {
       const piece = document.createElement("i");
@@ -336,6 +355,30 @@ const UI = (function () {
       dialog.close();
     });
 
+    confirmCancel.addEventListener("click", function () {
+      confirmDialog.close();
+    });
+
+    confirmAccept.addEventListener("click", function () {
+      confirmationAccepted = true;
+      confirmDialog.close();
+    });
+
+    confirmDialog.addEventListener("cancel", function (event) {
+      event.preventDefault();
+      confirmDialog.close();
+    });
+
+    confirmDialog.addEventListener("close", function () {
+      if (confirmationResolve) confirmationResolve(confirmationAccepted);
+      confirmationResolve = null;
+      confirmationAccepted = false;
+    });
+
+    confirmDialog.addEventListener("click", function (event) {
+      if (event.target === confirmDialog) confirmDialog.close();
+    });
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       const name = nameInput.value.trim();
@@ -392,5 +435,5 @@ const UI = (function () {
     setText(devInfo, text);
   }
 
-  return { init, render, openDialog, setDevInfo };
+  return { init, render, openDialog, setDevInfo, confirm };
 })();

@@ -126,7 +126,7 @@ const Engine = (function () {
 
   /* ---------- Turns the raw data into exactly what the screen needs ---------- */
 
-  function getView(streak, now, rainbowOn) {
+  function getView(streak, now) {
     const s = clone(streak);
     resolveExpiry(s, now);
 
@@ -151,11 +151,9 @@ const Engine = (function () {
     // Streak is active
     let theme = "tier";
     if (!s.cycleDone) theme = "gray";          // warning state: at risk
-    else if (rainbowOn) theme = "rainbow";     // global override
 
     let colors = tierColors(s.count);
     if (theme === "gray") colors = Config.GRAY;
-    if (theme === "rainbow") colors = Config.RAINBOW_COLORS;
 
     const expiresAt = s.cycleStart + Config.DAY_MS;
     const nextTierInfo = Config.TIERS.find(function (t) { return t.from > s.count; });

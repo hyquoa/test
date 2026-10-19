@@ -47,18 +47,16 @@ const App = (function () {
 
   function render() {
     const now = clock();
-    const rainbowOn = PlatformEvents.isRainbowOn();
 
     const items = data.streaks.map(function (streak) {
-      return { streak: streak, view: Engine.getView(streak.state, now, rainbowOn) };
+      return { streak: streak, view: Engine.getView(streak.state, now) };
     });
     UI.render(items, now);
 
     if (Config.DEV_MODE) {
       UI.setDevInfo(
         "Pretend it's: " + new Date(now).toLocaleString() + "\n" +
-        "Time skipped:  +" + Math.round(data.timeOffset / 3600000) + " hours\n" +
-        "Rainbow event: " + (rainbowOn ? "ON" : "off")
+        "Time skipped:  +" + Math.round(data.timeOffset / 3600000) + " hours"
       );
     }
   }
@@ -93,9 +91,15 @@ const App = (function () {
   function deleteStreak(id) {
     const streak = findStreak(id);
     if (!streak) return;
-    if (!confirm('Delete "' + streak.name + '"? Its streak will be lost.')) return;
-    data.streaks = data.streaks.filter(function (s) { return s.id !== id; });
-    saveAndRender();
+    UI.confirm({
+      title: "Delete this streak?",
+      message: 'Delete "' + streak.name + '"? Its streak will be lost.',
+      confirmLabel: "Delete"
+    }).then(function (confirmed) {
+      if (!confirmed || !findStreak(id)) return;
+      data.streaks = data.streaks.filter(function (s) { return s.id !== id; });
+      saveAndRender();
+    });
   }
 
   /* ---------- Developer tools ---------- */
@@ -111,15 +115,16 @@ const App = (function () {
     if (name === "skip") {
       data.timeOffset += hours * 3600000;
       saveAndRender();
-    } else if (name === "rainbow-on") {
-      PlatformEvents.fire("RAINBOW_START");
-    } else if (name === "rainbow-off") {
-      PlatformEvents.fire("RAINBOW_END");
     } else if (name === "reset") {
-      if (confirm("Delete ALL streaks and reset the clock?")) {
+      UI.confirm({
+        title: "Reset everything?",
+        message: "Delete all streaks and reset the clock? This cannot be undone.",
+        confirmLabel: "Reset everything"
+      }).then(function (confirmed) {
+        if (!confirmed) return;
         data = defaultData();
         saveAndRender();
-      }
+      });
     }
   }
 
@@ -136,8 +141,6 @@ const App = (function () {
       onDevSet: devSetStreak,
       onDev: devAction
     });
-
-    PlatformEvents.setListener(render);
 
     setInterval(render, 1000);   // keeps the countdowns and expiry live
     render();

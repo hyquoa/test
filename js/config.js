@@ -16,19 +16,15 @@ const Config = {
   DAY_MS: 24 * 60 * 60 * 1000,      // 24 hours, in milliseconds
 
   // Text palette colors are listed [left, right]; the first color is the left gradient edge.
-  GRAY:  ["#C2C0DC", "#9491A7"],    // at risk (not done yet)
+  GRAY:  ["#CBD5E1", "#64748B"],    // at risk (not done yet)
   GREEN: ["#a3fd1c", "#5cef00"],    // done today, but the streak hasn't started yet
 
   // Each tier begins at "from" days
   TIERS: [
-    { tier: 1, from: 3,   colors: ["#f3ff47", "#ffb347"] },   // Orange -> Red
-    { tier: 2, from: 30,   colors: ["#ffb347", "#ff3b30"] },
-    { tier: 3, from: 100, colors: ["#ff47e6", "#d747ff"] },   // Violet -> Purple
-    { tier: 4, from: 200, colors: ["#7dd3fc", "#1d4ed8"] },   // Bright blue
-    { tier: 5, from: 365, colors: ["#1d4ed8", "#d81d74"] }  // Final tier; keeps this palette
-  ],
-
-  // Only used to shade the 3D side of a button during the rainbow event.
-  // (The animated rainbow itself lives in styles.css.)
-  RAINBOW_COLORS: ["#ff9900", "#9933ff"]
+    { tier: 1, from: 3,   colors: ["#faff00", "#ff7a00"] },
+    { tier: 2, from: 30,  colors: ["#00f5d4", "#168bff"] },
+    { tier: 3, from: 100, colors: ["#b7ff00", "#00c853"] },
+    { tier: 4, from: 200, colors: ["#ff3cac", "#784bff"] },
+    { tier: 5, from: 365, colors: ["#ffb000", "#ff3d5a"] }
+  ]
 };
