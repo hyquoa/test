@@ -6,7 +6,7 @@ const Config = {
 
   // true  = developer tools ON (button never locks, you can fast-forward time)
   // false = the real app (each streak can only be completed once per 24 hours)
-  DEV_MODE: false,
+  DEV_MODE: false, // prolly dont enable this lmao
   DEV_TOOLS_PASSWORD: "dev",
 
   STORAGE_KEY: "lmaoimtestingshutupikthisiseasilyhackable",      // the name your browser saves the data under
