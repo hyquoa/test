@@ -289,7 +289,8 @@ button { -webkit-tap-highlight-color: transparent; }
   border: 1px solid color-mix(in srgb, var(--tier-highlight) 24%, rgba(255,255,255,.1));
   border-radius: 20px;
   background:
-    radial-gradient(ellipse at 50% -25%, color-mix(in srgb, var(--tier-highlight) 18%, #24334f), #111a30 72%),
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--tier-highlight) 20%, #24334f), transparent 58%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--tier-bg) 16%, #111a30), #111a30 72%),
     #111a30;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 5px 18px rgba(0,0,0,.18);
   transition: background .3s ease, border-color .3s ease, transform .3s ease;
@@ -320,7 +321,7 @@ button { -webkit-tap-highlight-color: transparent; }
   display: block;
   padding-inline: .12em;
   color: transparent;
-  background-image: linear-gradient(155deg, var(--c1) 8%, var(--c2) 94%);
+  background-image: linear-gradient(0deg, var(--c1) 8%, var(--c2) 94%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -343,7 +344,7 @@ button { -webkit-tap-highlight-color: transparent; }
   -webkit-text-fill-color: transparent;
 }
 .streak-number-depth {
-  background-image: linear-gradient(155deg, var(--depth1) 8%, var(--depth2) 94%);
+  background-image: linear-gradient(0deg, var(--depth1) 8%, var(--depth2) 94%);
 }
 .streak-number.pop { animation: number-pop .54s cubic-bezier(.2,.8,.2,1); }
 .streak-label {
@@ -358,14 +359,15 @@ button { -webkit-tap-highlight-color: transparent; }
   width: fit-content;
   margin: 0 auto 5px;
   padding: 5px 10px;
-  border: 1px solid color-mix(in srgb, var(--tier-highlight) 28%, #172139);
+  border: 1px solid color-mix(in srgb, var(--tier-highlight) 38%, #172139);
   border-radius: 99px;
   color: #f4f7ff;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .09em;
   text-transform: uppercase;
-  background: linear-gradient(120deg, color-mix(in srgb, var(--tier-highlight) 22%, #172139), color-mix(in srgb, var(--tier-bg) 22%, #172139));
+  background: linear-gradient(0deg, color-mix(in srgb, var(--tier-highlight) 22%, #172139), color-mix(in srgb, var(--tier-bg) 22%, #172139));
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--tier-bg) 18%, transparent), inset 0 1px 0 rgba(255,255,255,.12);
 }
 .tier-countdown {
   min-height: 16px;
@@ -405,6 +407,7 @@ button { -webkit-tap-highlight-color: transparent; }
   color: #101824;
   --button-start: var(--tier-highlight);
   --button-end: var(--tier-bg);
+  background-image: linear-gradient(0deg, var(--button-start) 0%, color-mix(in srgb, var(--button-start) 50%, var(--button-end)) 48%, var(--button-end) 100%);
 }
 .card[data-theme="gray"] .done-btn { --button-start: #64748b; --button-end: #334155; color: #f4f7ff; }
 .timer {
@@ -526,7 +529,7 @@ button { -webkit-tap-highlight-color: transparent; }
   background-image: linear-gradient(155deg, var(--celebration-before-depth), var(--celebration-before-depth));
 }
 .celebration-number-after .celebration-number-depth {
-  background-image: linear-gradient(180deg, var(--celebration-depth-start), var(--celebration-depth-end));
+  background-image: linear-gradient(0deg, var(--celebration-depth-start), var(--celebration-depth-end));
 }
 .celebration-number-before {
   filter: drop-shadow(0 5px 8px rgba(65,69,82,.2));
@@ -541,7 +544,7 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 .celebration-number-after .celebration-number-face {
   color: transparent;
-  background: linear-gradient(180deg, var(--celebration-start), var(--celebration-end));
+  background: linear-gradient(0deg, var(--celebration-start), var(--celebration-end));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -567,7 +570,7 @@ button { -webkit-tap-highlight-color: transparent; }
   font-size: 12px;
   font-weight: 900;
   letter-spacing: .12em;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--celebration-start) 24%, #18233d), color-mix(in srgb, var(--celebration-end) 30%, #11182d));
+  background: linear-gradient(0deg, color-mix(in srgb, var(--celebration-start) 24%, #18233d), color-mix(in srgb, var(--celebration-end) 30%, #11182d));
   box-shadow: 0 5px 18px color-mix(in srgb, var(--celebration-end) 28%, transparent), inset 0 1px 0 rgba(255,255,255,.12);
 }
 .is-playing.is-tier-up .celebration-tier { animation: tier-badge-in .8s cubic-bezier(.16,1,.3,1) .72s both; }

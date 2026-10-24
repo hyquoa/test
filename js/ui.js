@@ -208,7 +208,9 @@ const UI = (function () {
 
   function prepareCelebrationConfetti() {
     const confetti = celebration.querySelector(".celebration-confetti");
-    const colors = ["#a3fd1c", "#5cef00", "#00f5d4", "#168bff", "#ff3cac", "#ffb000"];
+    const colors = Config.GREEN.concat(Config.TIERS.reduce(function (all, tier) {
+      return all.concat(tier.colors);
+    }, []));
 
     for (let i = 0; i < 36; i++) {
       const piece = document.createElement("i");
