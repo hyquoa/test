@@ -47,6 +47,23 @@ const UI = (function () {
     if (el.textContent !== text) el.textContent = text;
   }
 
+  function setIconText(el, icon, text) {
+    const iconPath = icon ? "assets/gvesster/" + icon + ".png" : "";
+    if (el.dataset.iconPath === iconPath && el.textContent === text) return;
+
+    el.replaceChildren();
+    if (iconPath) {
+      const image = document.createElement("img");
+      image.className = "inline-icon";
+      image.src = iconPath;
+      image.alt = "";
+      image.setAttribute("aria-hidden", "true");
+      el.appendChild(image);
+    }
+    if (text) el.appendChild(document.createTextNode(text));
+    el.dataset.iconPath = iconPath;
+  }
+
   // Makes a darker copy of a "#rrggbb" color (for the 3D side of buttons)
   function darken(hex, factor) {
     const n = parseInt(hex.slice(1), 16);
@@ -90,30 +107,30 @@ const UI = (function () {
     card.innerHTML = `
       <div class="card-head">
         <h2 class="card-title"></h2>
-        <button class="icon-btn" data-action="edit" title="Edit" aria-label="Edit streak">✏️</button>
-        <button class="icon-btn" data-action="delete" title="Delete" aria-label="Delete streak">🗑️</button>
+        <button class="icon-btn" data-action="edit" title="Edit" aria-label="Edit streak"><img class="icon-image" src="assets/gvesster/pencil.png" alt="" aria-hidden="true"></button>
+        <button class="icon-btn" data-action="delete" title="Delete" aria-label="Delete streak"><img class="icon-image" src="assets/gvesster/trash.png" alt="" aria-hidden="true"></button>
       </div>
 
       <div class="streak-area">
         <div class="streak-number" role="img" aria-label="0 day streak"><span class="streak-number-depth" aria-hidden="true">0</span><span class="streak-number-face">0</span></div>
-        <p class="streak-label"><span class="flame">🔥</span> day streak</p>
+        <p class="streak-label"><span class="flame"><img src="assets/gvesster/fire.png" alt="" aria-hidden="true"></span> day streak</p>
         <p class="tier-label"></p>
         <p class="tier-countdown"></p>
       </div>
 
       <div class="building">
-        <div class="dots"></div>
+        <div class="dots" role="img"></div>
         <div class="building-text"></div>
       </div>
 
-      <button class="btn-3d done-btn" data-action="complete">I did it today!</button>
+      <button class="btn-3d done-btn" data-action="complete"></button>
       <div class="timer"></div>
     `;
 
     if (Config.DEV_MODE) {
       card.insertAdjacentHTML("beforeend", `
         <div class="dev-row">
-          <label for="dev-count-${id}">🛠 Set streak days</label>
+          <label for="dev-count-${id}"><img class="inline-icon" src="assets/gvesster/settings.png" alt="" aria-hidden="true"> Set streak days</label>
           <div class="dev-set-controls">
             <input id="dev-count-${id}" class="dev-count-input" type="number" min="0" max="9007199254740991" step="1" required aria-label="Streak day count">
             <button type="button" data-action="dev-set">Set</button>
@@ -127,6 +144,14 @@ const UI = (function () {
           card.querySelector('[data-action="dev-set"]').click();
         }
       });
+    }
+
+    const dots = card.querySelector(".dots");
+    for (let i = 0; i < Config.ACTIVATION_DAYS; i++) {
+      const dot = document.createElement("span");
+      dot.className = "build-dot";
+      dot.setAttribute("aria-hidden", "true");
+      dots.appendChild(dot);
     }
 
     return card;
@@ -170,16 +195,20 @@ const UI = (function () {
       }
       numberEl.setAttribute("aria-label", text + " day streak");
       setText(card.querySelector(".tier-label"), "Tier " + view.tier);
-      setText(card.querySelector(".tier-countdown"), view.nextTier === null
-        ? "🏆 Highest tier reached"
-        : view.tierCountdownMs === 0 && !view.done
-          ? "Complete today to reach Tier " + view.nextTier + "!"
-          : "Tier " + view.nextTier + " in " + formatTime(view.tierCountdownMs));
+      setIconText(card.querySelector(".tier-countdown"), view.nextTier === null ? "trophy" : null,
+        view.nextTier === null
+          ? "Highest tier reached"
+          : view.tierCountdownMs === 0 && !view.done
+            ? "Complete today to reach Tier " + view.nextTier + "!"
+            : "Tier " + view.nextTier + " in " + formatTime(view.tierCountdownMs));
       card.dataset.tier = String(view.tier);
     } else {
       const n = Math.min(view.buildDays, Config.ACTIVATION_DAYS);
-      setText(card.querySelector(".dots"),
-        "●".repeat(n) + "○".repeat(Config.ACTIVATION_DAYS - n));
+      const dots = card.querySelector(".dots");
+      Array.from(dots.children).forEach(function (dot, index) {
+        dot.classList.toggle("is-complete", index < n);
+      });
+      dots.setAttribute("aria-label", n + " of " + Config.ACTIVATION_DAYS + " days completed");
       setText(card.querySelector(".building-text"),
         "Do this " + Config.ACTIVATION_DAYS + " days in a row to start your streak");
       setText(card.querySelector(".tier-label"), "");
@@ -192,17 +221,18 @@ const UI = (function () {
     // The button
     const button = card.querySelector(".done-btn");
     button.disabled = view.done && !Config.DEV_MODE;
-    setText(button, view.done ? "Done for today ✅" : "I did it today!");
+    setIconText(button, view.done ? "checkmark" : null, view.done ? "Done for today" : "I did it today!");
 
     // The countdown
     const timer = card.querySelector(".timer");
     if (view.visible) {
       const left = formatTime(view.expiresAt - now);
-      setText(timer, view.done
-        ? "✅ Safe for now. New window opens in " + left
-        : "⚠️ Streak at risk! " + left + " left");
+      setIconText(timer, view.done ? "checkmark" : "warning", view.done
+        ? "Safe for now. New window opens in " + left
+        : "Streak at risk! " + left + " left");
     } else {
-      setText(timer, view.done ? "✅ Done for today. Come back tomorrow!" : "");
+      setIconText(timer, view.done ? "checkmark" : null,
+        view.done ? "Done for today. Come back tomorrow!" : "");
     }
   }
 

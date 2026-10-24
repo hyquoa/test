@@ -17,18 +17,18 @@
   <div class="ambient ambient-two" aria-hidden="true"></div>
   <header class="page-header">
     <a class="brand" href="#" aria-label="MyStreaks home">
-      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span class="brand-mark" aria-hidden="true"><img src="assets/gvesster/sparkle.png" alt=""></span>
       <span>MyStreaks</span>
     </a>
     <div class="hero">
       <p class="eyebrow"><span class="eyebrow-dot"></span> YOUR DAILY MOMENTUM</p>
       <h1>Small steps.<br><span>Big change.</span></h1>
       <p class="hero-copy">Show up for what matters. Your progress starts with today.</p>
-      <button id="addBtn" class="btn-3d btn-green"><span class="add-icon" aria-hidden="true">+</span> New streak</button>
+      <button id="addBtn" class="btn-3d btn-green"><img class="add-icon" src="assets/gvesster/plus.png" alt="" aria-hidden="true"> New streak</button>
     </div>
   </header>
 
-  <p id="emptyMessage" hidden><span class="empty-icon">✦</span><strong>Your story starts here.</strong><span>Create a streak and make today count.</span></p>
+  <p id="emptyMessage" hidden><img class="empty-icon" src="assets/gvesster/sparkle.png" alt="" aria-hidden="true"><strong>Your story starts here.</strong><span>Create a streak and make today count.</span></p>
 
   <!-- The streak cards get drawn in here by js/ui.js -->
   <main class="content">
@@ -44,8 +44,8 @@
     <div class="celebration-card" aria-hidden="true">
       <p class="celebration-kicker">MY STREAKS</p>
       <div class="celebration-symbol">
-        <span class="celebration-flame celebration-flame-base">🔥</span>
-        <span class="celebration-flame celebration-flame-lit">🔥</span>
+        <img class="celebration-flame celebration-flame-base" src="assets/gvesster/fire-large.png" alt="" aria-hidden="true">
+        <img class="celebration-flame celebration-flame-lit" src="assets/gvesster/fire-large.png" alt="" aria-hidden="true">
         <span class="celebration-number celebration-number-before"><span class="celebration-number-depth" aria-hidden="true"></span><span class="celebration-number-face"></span></span>
         <span class="celebration-number celebration-number-after"><span class="celebration-number-depth" aria-hidden="true"></span><span class="celebration-number-face"></span></span>
       </div>
@@ -71,7 +71,7 @@
   </dialog>
 
   <dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
-    <div class="confirm-icon" aria-hidden="true">!</div>
+    <div class="confirm-icon" aria-hidden="true"><img src="assets/gvesster/warning.png" alt=""></div>
     <h2 id="confirmTitle">Confirm action</h2>
     <p id="confirmMessage"></p>
     <div class="dialog-buttons">
@@ -85,7 +85,7 @@
     Developer Tools
   </button>
   <section id="devPanel" hidden>
-    <h2>🛠 Developer tools</h2>
+    <h2><img class="inline-icon" src="assets/gvesster/settings.png" alt="" aria-hidden="true"> Developer tools</h2>
 
     <h3>Fast-forward time (affects every streak)</h3>
     <button data-dev="skip" data-hours="1">+1 hour</button>
