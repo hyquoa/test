@@ -790,9 +790,9 @@ body.dev-hidden .dev-row { display: none; }
 }
 
 @media (max-height: 760px) {
-  body { padding-bottom: 8px; }
-  .hero { margin-top: 26px; }
-  .content { margin-top: 24px; }
+  body { padding-bottom: 0; }
+  .hero { margin-top: 22px; }
+  .content { margin-top: 20px; }
   .section-heading { margin-bottom: 12px; }
   .streak-area, .building { min-height: 170px; }
 }
