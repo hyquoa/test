@@ -780,10 +780,21 @@ body.dev-hidden .dev-row { display: none; }
 }
 
 @media (min-width: 641px) and (max-height: 850px) {
-  body { padding-bottom: 24px; }
-  .brand { margin-top: 18px; }
-  .hero { margin-top: 36px; }
-  .content { margin-top: 38px; }
+  body { padding-bottom: 8px; }
+  .brand { margin-top: 12px; }
+  .hero { margin-top: 24px; }
+  .content { margin-top: 24px; }
+  .section-heading { margin-bottom: 12px; }
+  .card { padding: 12px; }
+  .streak-area, .building { min-height: 190px; }
+}
+
+@media (max-height: 760px) {
+  body { padding-bottom: 8px; }
+  .hero { margin-top: 26px; }
+  .content { margin-top: 24px; }
+  .section-heading { margin-bottom: 12px; }
+  .streak-area, .building { min-height: 170px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
