@@ -1,11 +1,7 @@
-/* =========================================================
-   config.js — settings and colors. Change things here!
-   ========================================================= */
-
 const Config = {
 
-  // true  = developer tools ON (button never locks, you can fast-forward time)
-  // false = the real app (each streak can only be completed once per 24 hours)
+  // true  = dev tools on
+  // false = not on dehahah
   DEV_MODE: false, // prolly dont enable this lmao
   DEV_TOOLS_PASSWORD: "dev",
 
